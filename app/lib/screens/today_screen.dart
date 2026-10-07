@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:walk_core/walk_core.dart';
 
 import '../state/app_state.dart';
+import 'footprint_map.dart';
 import 'format.dart';
 
 class TodayScreen extends StatelessWidget {
@@ -22,6 +23,15 @@ class TodayScreen extends StatelessWidget {
             style: theme.textTheme.bodySmall),
         const SizedBox(height: 12),
         for (final dog in state.dogs) _DogCard(state: state, dog: dog, summary: byDog[dog.id]),
+        if (state.todayTracks.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          Text('今天的足迹', style: theme.textTheme.titleMedium),
+          const SizedBox(height: 8),
+          FootprintMap(tracks: [
+            for (final t in state.todayTracks)
+              MapTrack(t.track, state.member(t.memberId).color),
+          ]),
+        ],
       ],
     );
   }
