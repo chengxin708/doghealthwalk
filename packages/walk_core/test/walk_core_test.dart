@@ -25,6 +25,26 @@ void main() {
       expect(trackDistanceKm(pts), closeTo(0.111, 0.005));
     });
 
+    test('边走边算与整条轨迹结果一致,噪点不被采用', () {
+      final pts = [
+        GeoPoint(40, -74, time: t0),
+        GeoPoint(40.0005, -74, time: t0.add(const Duration(seconds: 45))),
+        GeoPoint(40.01, -74, time: t0.add(const Duration(seconds: 50))), // 跳点
+        GeoPoint(40.0007, -74, accuracyM: 80, time: t0.add(const Duration(seconds: 60))),
+        GeoPoint(40.001, -74, time: t0.add(const Duration(seconds: 90))),
+      ];
+      final acc = TrackAccumulator();
+      expect(pts.map(acc.add), [true, true, false, false, true]);
+      expect(acc.distanceKm, closeTo(trackDistanceKm(pts), 1e-12));
+      expect(acc.distanceKm, closeTo(0.111, 0.005));
+    });
+
+    test('GPS 有距离时不用步数,GPS 为 0 时用步数', () {
+      expect(pickDistanceKm(gpsKm: 0.5, humanSteps: 2000), 0.5);
+      expect(pickDistanceKm(gpsKm: 0, humanSteps: 2000), closeTo(1.4, 1e-9));
+      expect(pickDistanceKm(gpsKm: 0), 0);
+    });
+
     test('没有 GPS 时用人的步数兜底', () {
       expect(walkDistanceKm(humanSteps: 2000, humanStrideM: 0.7), closeTo(1.4, 1e-9));
     });

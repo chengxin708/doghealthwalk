@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Doghealthwalk</string>
+	<string>遛狗健康</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -47,6 +47,16 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>遛狗时记录路线和距离,用来估算每只狗的步数和卡路里。</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>遛狗时记录路线和距离,用来估算每只狗的步数和卡路里。</string>
+	<key>NSMotionUsageDescription</key>
+	<string>GPS 信号不好时,用你走的步数估算遛狗距离。</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

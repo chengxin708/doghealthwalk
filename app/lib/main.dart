@@ -1,12 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'location/device_sources.dart';
 import 'screens/dogs_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/today_screen.dart';
 import 'screens/walk_screen.dart';
 import 'state/app_state.dart';
 
-void main() => runApp(DogHealthWalkApp(state: AppState()));
+/// 手机上用真 GPS 和计步器;网页版用模拟定位,方便在浏览器里演示。
+void main() => runApp(DogHealthWalkApp(
+      state: kIsWeb ? AppState() : AppState(location: DeviceLocation(), steps: DeviceSteps()),
+    ));
 
 class DogHealthWalkApp extends StatelessWidget {
   const DogHealthWalkApp({super.key, required this.state});
